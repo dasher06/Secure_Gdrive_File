@@ -27,7 +27,7 @@ python Encrypted_Link.py
 
 This started the web server at:
 
-http://127.0.0.1:5000/decrypt_link
+http://127.0.0.1:5000/decrypt_link (I added the video file of the output i ran local)
 
 This worked fine for testing, but only I could access it since it was local.
 
