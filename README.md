@@ -99,15 +99,15 @@ Here are the main files:
 
 ---
 
-Created by Trinab Shan
-
-GitHub: @dasher06
-
----
-
 ## Acknowledgements
 
 Special thanks to my uncle **Kiru Veerappan** for encouraging and guiding me in building this project .  
+
+---
+
+Created by Trinab Shan
+
+GitHub: @dasher06
 
 Thank You
 
