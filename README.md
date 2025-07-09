@@ -101,7 +101,7 @@ Here are the main files:
 
 ## Acknowledgements
 
-Special thanks to my uncle **Kiru Veerappan** for encouraging and guiding me in building this project .  
+Special thanks to my both uncle **Kiru Veerappan** and **Udhayan Nagarajan** for encouraging and guiding me in building this project .  
 
 ---
 
@@ -110,8 +110,6 @@ Created by Trinab Shan
 GitHub: @dasher06
 
 Thank You
-
-Added README file with project details and acknowledgements
 
 
 
