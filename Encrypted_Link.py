@@ -90,25 +90,8 @@ if __name__ == "__main__" and os.environ.get("WERKZEUG_RUN_MAIN") != "true":
     message["To"] = receiver_email
 
     text = f"""
-Hello Kiruba mama,
 
-If you get an email like this from another gmail (trinabtime@gmail.com), I want you to ignore it because I sent it by mistake.
-Kindly excuse me for that mama.
-
-I have created an encrypted Google Drive link and hosted a secure decryption service on Google Cloud Platform (GCP).
-
-To decrypt and access the file, go to the following URL and enter the decryption key:
-
-🔓 Decryption Page:  
-{decryption_page_url}
-
-🔐 Decryption Key: {custom_key_input}
-
-This page will allow you to enter the key and reveal the original link securely.
-
-Thank You,
-Trinab Shan
-"""
+""" #Message you are sending to the receiver can be modified here
 
     part = MIMEText(text, "plain")
     message.attach(part)
