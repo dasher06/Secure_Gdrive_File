@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+myvenv/
+
+# Environment & secrets
+.env
+client_secrets.json
+credentials.json
+
+# macOS & IDE-specific
+.DS_Store
+.vscode/
