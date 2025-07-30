@@ -10,29 +10,46 @@ from flask import Flask, request, render_template
 
 app = Flask(__name__)
 
+@app.route('/')
+def oauth2callback():
+    message = "✅ OAuth Redirect Received at / — You can close this tab now."
+    print(message)
+    return message
+
 @app.route('/decrypt_link', methods=['GET', 'POST'])
 def decrypt_link():
-    decrypted = error = None
-    encrypted = request.args.get('encrypted') or request.form.get('encrypted')
+    error = None
+    decrypted = None
+    encrypted = request.form.get('encrypted') if request.method == 'POST' else request.args.get('encrypted', '')
 
-    if not encrypted:
-        error = "No encrypted link provided."
-    elif request.method == 'POST':
-        key = request.form.get('key', '')
-        if key and len(key) == 10 and key.isdigit():
+    if request.method == 'POST':
+        key = request.form.get('key')
+        if not key or len(key) != 10 or not key.isdigit():
+            error = 'Invalid key: must be 10 digits'
+        else:
             try:
                 custom_key = key.ljust(32, '0').encode()
-                cipher_suite = Fernet(base64.urlsafe_b64encode(custom_key))
-                decrypted = cipher_suite.decrypt(encrypted.encode()).decode()
+                fernet = Fernet(base64.urlsafe_b64encode(custom_key))
+                decrypted = fernet.decrypt(encrypted.encode()).decode()
             except Exception as e:
-                error = f"Decryption failed: {str(e)}"
-        else:
-            error = "Please enter a valid 10-digit numeric key."
+                error = f'Decryption failed: {str(e)}'
 
-    return render_template('decrypt_link.html', encrypted=encrypted, decrypted=decrypted, error=error)
+    print("encrypted:", encrypted)
+    print("decrypted:", decrypted)
+    print("error:", error)
 
-# Local-only logic
-if __name__ == "__main__" and os.environ.get("WERKZEUG_RUN_MAIN") != "true":
+    try:
+        return render_template('decrypt_link.html', encrypted=encrypted, decrypted=decrypted, error=error)
+    except Exception as e:
+        print("Template rendering failed:", e)
+        return f"Error: {str(e)}", 500
+
+@app.route("/status")
+def home():
+    return "Flask is working!"
+
+if __name__ == "__main__":
+    # 1. OAuth & Drive setup
     settings_file_path = "client_secrets.json"
 
     if not os.path.exists(settings_file_path):
@@ -57,9 +74,9 @@ if __name__ == "__main__" and os.environ.get("WERKZEUG_RUN_MAIN") != "true":
 
     print(f"Selected file: Title: {selected_file['title']}, ID: {selected_file['id']}")
 
-    permission = selected_file.InsertPermission({
+    selected_file.InsertPermission({
         'type': 'anyone',
-        'role': 'writer'
+        'role': 'reader'
     })
     print(f"Permission granted to anyone for file: {selected_file['title']}")
 
@@ -75,14 +92,13 @@ if __name__ == "__main__" and os.environ.get("WERKZEUG_RUN_MAIN") != "true":
     print(f'Encrypted link: {encrypted_link}')
     print(f'Decryption key: {custom_key_input}')
 
-    # Cloud Run URL
-    cloud_run_url = "https://secure-decryptor-1068809376566.us-central1.run.app"
+    cloud_run_url = "https://email-link-encryption-1068809376566.us-central1.run.app"
     decryption_page_url = f"{cloud_run_url}/decrypt_link?encrypted={encrypted_link}"
     print(f"\nSend this link to decrypt the file:\n{decryption_page_url}")
 
-    sender_email = "trinabshan06@gmail.com"
-    receiver_email = "trinabtime@gmail.com"
-    password = "yhcq gspr pnal rlfu"  # App Password
+    sender_email = "  "# Your Gmail address
+    receiver_email = "  "# Recipient's email address
+    password = "  "  # App Password
 
     message = MIMEMultipart("alternative")
     message["Subject"] = "Encrypted Google Drive Link"
@@ -90,12 +106,15 @@ if __name__ == "__main__" and os.environ.get("WERKZEUG_RUN_MAIN") != "true":
     message["To"] = receiver_email
 
     text = f"""
+    Hi,
 
-""" #Message you are sending to the receiver can be modified here
+    🔐 Decryption Key: {custom_key_input}
 
+    🔓 Decryption Page:  
+{decryption_page_url}
+"""# Message that is sent through gmail will be written here.
     part = MIMEText(text, "plain")
     message.attach(part)
-
     try:
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
             server.login(sender_email, password)
@@ -103,3 +122,8 @@ if __name__ == "__main__" and os.environ.get("WERKZEUG_RUN_MAIN") != "true":
             print("Email sent successfully!")
     except Exception as e:
         print(f"An error occurred while sending the email: {e}")
+
+    # 2. Show local URL
+    port = int(os.environ.get("PORT", 8080))
+    print(f"\n🔗 Flask app running locally at: http://127.0.0.1:{port}/decrypt_link?encrypted={encrypted_link}")
+    app.run(host="0.0.0.0", port=port)
