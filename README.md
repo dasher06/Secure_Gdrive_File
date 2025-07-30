@@ -1,19 +1,66 @@
 # Secure GDrive Link Encryptor and Decryptor
 
-This is a simple project I built to share Google Drive files in a secure way. Instead of just sending someone a direct link to a file, this app encrypts the link using a 10-digit password that only the sender and receiver know. The receiver can then use that password on a web page to unlock and access the file.
+This is a simple project I built to share **Google Drive files** in a secure way. Instead of just sending someone a direct link to a file, this app **encrypts** the link using a **10-digit password** that only the sender and receiver know. 
+
+The receiver can then use that password on a web page to unlock and access the file.
 
 ---
 
-## How the project should work (Because, The project is currently being transitioned from Render to Google Cloud Platform (GCP), and the codebase is still under development.)
+## How to Run the Project
 
-1. You select a file from your Google Drive.
+### Here’s how you can run this project on your local machine:
+
+1. Clone the repo to your computer
+2. Install the required Python packages using `pip install -r requirements.txt`
+3. Go to **Google Cloud **:
+   - Create a new project
+   - Enable the Google Drive API
+   - Configure the OAuth Consent Screen
+   - Create OAuth Client ID credentials
+   - Download the `client_secrets.json` file and place it in the root folder
+   - Run the script using `python Encrypted_Link.py`
+
+4. A browser window will open to authenticate your **Google Drive**
+   - Once authenticated, a list of your Drive files will appear in the terminal
+   - Choose a file by entering its number
+   - Enter a 10-digit password (this is your custom encryption key)
+
+5. The script:
+   - Gives public permission to the file
+   - Encrypts the file link using your password
+   - Sends an email with a special decryption page and password
+   - The receiver opens the link, enters the password, and gets the original file
+
+### How to Deploy on Google Cloud Run
+
+1. Here's how to deploy the app using Cloud Run:
+   - Make sure you have a Google Cloud project set up
+   - Enable the **Cloud Run**, **Cloud Build**, and **Artifact Registry APIs**
+   - Install and set up the Google Cloud CLI
+   - Authenticate with: `gcloud auth login`
+   - Make sure your project is selected: `gcloud config set project [PROJECT_ID]`
+
+2. In your project folder, run:
+   - `gcloud builds submit --tag gcr.io/[PROJECT_ID]/secure-gdrive`
+
+3. Deploy to Cloud Run with:
+   - `gcloud run deploy secure-gdrive --image gcr.io/[PROJECT_ID]/secure-gdrive --platform managed --region [YOUR_REGION] --allow-unauthenticated`
+
+4. After deployment, you’ll get a public URL like:
+   - https://secure-gdrive-[random].run.app
+
+**Share this URL with the encrypted query string for access**
+
+## How the project works?
+
+1. You select a file from your **Google Drive**.
 2. The app gives that file public permissions so that anyone with the link can view or edit it.
 3. You choose a 10-digit number as a password.
 4. The link gets encrypted using that password.
 5. An email is sent to someone with:
    - A secure page link (where they can decrypt the file)
    - The password needed to unlock it
-6. The receiver visits the link, enters the password, and gets the original Google Drive file.
+6. The receiver visits the link, enters the password, and gets the original **Google Drive file**.
 
 ---
 
@@ -27,7 +74,7 @@ python Encrypted_Link.py
 
 This started the web server at:
 
-http://127.0.0.1:5000/decrypt_link (I added the video file of the output i ran local)
+http://127.0.0.1:5000/decrypt_link
 
 This worked fine for testing, but only I could access it since it was local.
 
@@ -65,13 +112,13 @@ This made the app available 24/7 without needing to keep my computer on.
 
 ### 4. Google Cloud Platform (current attempt)
 
-Right now, I'm trying to deploy the project on Google Cloud Platform (GCP) using Cloud Run because, I don't want code alteration like render. I created a Dockerfile for the app, built the container, and deployed it using the gcloud command line tool.
+Right now, the project is deployed on Google Cloud Platform (GCP) using Cloud Run because, I don't want code alteration like render. I created a Dockerfile for the app, built the container, and deployed it using the gcloud command line tool.
 
-This is a live URL for the decryption but has internal error (I am looking into it):
+This is the live URL shows the code works but the final URL will not be revealed.
 
-https://secure-decryptor-1068809376566.us-central1.run.app/decrypt_link?encrypted=gAAAAABobgOc2kZKFPLyt78Ko2Y1SchhYWKD8NkcJDwhdwUFkyApU-HwaQk8t6FdGYU27TKr0CGngwVWqZiIwWjSbAITsO1dBduLzM6Mxh6pchCZInuXgi6nqcLkacfK_PEGrU3fN2C_4GSog1AVaJcbCWGCBJ9xBRAgM9caPKpNTShm1NgX7PI=
+https://email-link-encryption-1068809376566.us-central1.run.app
 
-But currently, it's not working. I'm getting a "500 Internal Server Error" when I visit the page. I'm still figuring out what went wrong — it could be something with the Dockerfile, missing secrets, or incorrect Flask configuration.
+Now, this makes the process eaiser because, the server is live 24/7 and i was able to deploy the program without any alteration and error.
 
 ---
 
@@ -84,6 +131,7 @@ Here are the main files:
 - `Dockerfile`: Tells Google Cloud how to build and run the app
 - `.gitignore`: Makes sure secret files and unnecessary folders (like venv) aren't uploaded
 - `templates/decrypt_link.html`: The HTML template for the decryption form
+- `.dockerignore`: Prevents specified files from being copied into Docker build context
 
 ## Technologies Used
 
