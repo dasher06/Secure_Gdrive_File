@@ -110,8 +110,7 @@ if __name__ == "__main__":
 
     🔐 Decryption Key: {custom_key_input}
 
-    🔓 Decryption Page:  
-{decryption_page_url}
+    🔓 Decryption Page: {decryption_page_url}
 """# Message that is sent through gmail will be written here.
     part = MIMEText(text, "plain")
     message.attach(part)
