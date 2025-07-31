@@ -114,7 +114,7 @@ This made the app available 24/7 without needing to keep my computer on.
 
 Right now, the project is deployed on Google Cloud Platform (GCP) using Cloud Run because, I don't want code alteration like render. I created a Dockerfile for the app, built the container, and deployed it using the gcloud command line tool.
 
-This is the sample live URL on how the output looks.
+This is the sample live URL on how the output looks. You can check it by clicking the link below,
 
 🔓 Decryption Page:
 
