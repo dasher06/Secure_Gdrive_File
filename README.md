@@ -114,11 +114,17 @@ This made the app available 24/7 without needing to keep my computer on.
 
 Right now, the project is deployed on Google Cloud Platform (GCP) using Cloud Run because, I don't want code alteration like render. I created a Dockerfile for the app, built the container, and deployed it using the gcloud command line tool.
 
-This is the live URL shows the code works but the final URL will not be revealed.
+This is the sample live URL on how the output looks.
 
-https://email-link-encryption-1068809376566.us-central1.run.app
+🔓 Decryption Page:
 
-Now, this makes the process eaiser because, the server is live 24/7 and i was able to deploy the program without any alteration and error.
+https://email-link-encryption-1068809376566.us-central1.run.app/decrypt_link?encrypted=gAAAAABoitaIj1z0f2zVW2wLOPVAknYV76n3z_S05YRbn4DHVvDVM2tNIhVJbOMZEOfwQrtv-iimHoLpNj1aNm4Dp5zAzgvXV81ObXzt2-NfYebmagNpJcJVmCOZokJenMyKLt6B7Tm5mob7BL6D-bBpZHgmOlyuUlTimu4-NndsSZI5xaOvmtU=
+
+When prompted, enter the decryption key below:
+
+🔐 Decryption Key: 1234567890
+
+Now, this makes the process easier because, the server is live 24/7 and i was able to deploy the program without any alteration and error.
 
 ---
 
