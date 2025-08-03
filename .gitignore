@@ -1,0 +1,21 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment folders (Windows)
+venv/
+myvenv/
+
+# Environment variables and secrets
+.env
+client_secrets.json
+
+# VS Code settings
+.vscode/
+
+# macOS system files (if edited on Mac later)
+.DS_Store
+
+# PyDrive credential cache (optional)
+credentials.json

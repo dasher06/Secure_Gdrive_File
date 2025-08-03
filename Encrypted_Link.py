@@ -96,9 +96,9 @@ if __name__ == "__main__":
     decryption_page_url = f"{cloud_run_url}/decrypt_link?encrypted={encrypted_link}"
     print(f"\nSend this link to decrypt the file:\n{decryption_page_url}")
 
-    sender_email = "  "# Your Gmail address
-    receiver_email = "  "# Recipient's email address
-    password = "  "  # App Password
+    sender_email = "trinabshan06@gmail.com"
+    receiver_email = "trinabtime@gmail.com"
+    password = "yhcq gspr pnal rlfu"  # App Password
 
     message = MIMEMultipart("alternative")
     message["Subject"] = "Encrypted Google Drive Link"
@@ -106,12 +106,32 @@ if __name__ == "__main__":
     message["To"] = receiver_email
 
     text = f"""
-    Hi,
+Hello Kiruba mama,
 
-    🔐 Decryption Key: {custom_key_input}
+I’ve created an encrypted Google Drive file link and deployed a secure decryption service on Google Cloud Platform (GCP).
 
-    🔓 Decryption Page: {decryption_page_url}
-"""# Message that is sent through gmail will be written here.
+To view the file,
+
+Open the following secure decryption page in your browser by clicking the link below:
+
+🔓 Decryption Page:
+{decryption_page_url}
+
+When prompted, enter the decryption key below:
+🔐 Decryption Key: {custom_key_input}
+
+The decryption key is the number code for the word "Sorry"
+
+Once the key is entered, the page will decrypt the original Google Drive link and allow you to access the file directly.
+
+I have also updated the github repository with the latest code for this project. You can find it here:
+https://github.com/dasher06/Secure_Gdrive_File
+
+Let me know if you face any issues in the process mama.
+
+Thank you,
+Trinab Shan
+"""
     part = MIMEText(text, "plain")
     message.attach(part)
     try:
