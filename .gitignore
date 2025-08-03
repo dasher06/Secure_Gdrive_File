@@ -1,21 +1,18 @@
-# Byte-compiled / optimized / DLL files
+# Ignore Python cache
 __pycache__/
-*.py[cod]
-*$py.class
+*.pyc
+*.pyo
+*.pyd
 
-# Virtual environment folders (Windows)
+# Ignore environment files
+.env
+client_secrets.json
+credentials.json
+
+# Ignore virtual environments
 venv/
 myvenv/
 
-# Environment variables and secrets
-.env
-client_secrets.json
-
-# VS Code settings
-.vscode/
-
-# macOS system files (if edited on Mac later)
+# Ignore IDE and OS files
 .DS_Store
-
-# PyDrive credential cache (optional)
-credentials.json
+.vscode/
