@@ -12,7 +12,7 @@ The receiver can then use that password on a web page to unlock and access the f
 
 1. Clone the repo to your computer
 2. Install the required Python packages using `pip install -r requirements.txt`
-3. Go to **Google Cloud ** :
+3. Go to **Google Cloud** :
    - Create a new project
    - Enable the Google Drive API
    - Configure the OAuth Consent Screen
